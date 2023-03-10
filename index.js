@@ -11,7 +11,7 @@ function getData(data){
                     let outer = document.getElementById(String(i));
                     let text = document.createElement("p");
                     text.className = "card-text";
-                    text.innerHTML = `${element["desc"]} <br> Price: $${element["price"]}`
+                    text.innerHTML = `Product Name: ${element["name"]}<br>${element["desc"]} <br> Price: $${element["price"]}`
                     outer.appendChild(text);
                     i++;
                 }
