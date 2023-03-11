@@ -19,7 +19,7 @@
 
     <style>
         .bd-placeholder-img {
-            font-size: 1.125rem;
+            font-size: 1.50rem;
             text-anchor: middle;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -28,33 +28,33 @@
 
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+                font-size: 5.5rem;
             }
         }
 
         .b-example-divider {
-            height: 3rem;
+            height: 7rem;
             background-color: rgba(0, 0, 0, .1);
             border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
+            border-width: 4px 0;
             box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
         }
 
         .b-example-vr {
             flex-shrink: 0;
-            width: 1.5rem;
+            width: 2.5rem;
             height: 100vh;
         }
 
         .bi {
-            vertical-align: -.125em;
+            vertical-align: -.250em;
             fill: currentColor;
         }
 
         .nav-scroller {
             position: relative;
             z-index: 2;
-            height: 2.75rem;
+            height: 3.75rem;
             overflow-y: hidden;
         }
 
@@ -69,53 +69,37 @@
             -webkit-overflow-scrolling: touch;
         }
     </style>
+    <script src="./index.js"></script>
 
 
 </head>
 
-<body>
+<body onLoad="javascript:getWomenDataFromJson()">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Assignment 1</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="#">The Shoe Haven</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                            <a class="nav-link" href="index.html">Men's Shoes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="Page2.html">Page2</a>
+                            <a class="nav-link active" aria-current="page" href="Page2.html">Women's Shoes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="link.html">Link</a>
+                            <a class="nav-link" href="link.html">Credits</a>
                         </li>
-                        
+    
                     </ul>
                 </div>
             </div>
         </nav>
-        <!--<div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
-                    <h4 class="text-black">About</h4>
-                    <p class="text-muted">Add some information about the album below, the author, or any other
-                        background context. Make it a few sentences long so folks can pick up some informative
-                        tidbits. Then, link them off to some social networking sites or contact information.</p>
-                </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white">Contact</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                        <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>-->
     </header>
 
     <main>
@@ -130,8 +114,7 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/heels/BlackHeels.jpg" alt="Black Heels on White background">
-                            <div class="card-body">
-                                <p class="card-text">Black Heels, a stable for a more dressed up looked, or if you are just wanting to rock a killer vibe. </p>
+                            <div class="card-body" id="1">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -145,8 +128,7 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/Heels/RedHeels.jpg" alt="Red Heels">
-                            <div class="card-body">
-                                <p class="card-text">Red Heels make for the perfect going out shoes when trying to make a statement. Everyone can see them, and everyone knows they look good.</p>
+                            <div class="card-body" id="2">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -159,10 +141,8 @@
                     </div>
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="./images/Heels/SparkleHeels.jpg" alt="Grey Sparkley Heels">
-                            <div class="card-body">
-                                <p class="card-text">These sparkely heels will light up any night on the dance floor. Giving onlookers something facinating to stare at. 
-                                </p>
+                            <img src="./images/Heels/SparkleHeels.jpg" alt="Grey Sparkle Heels">
+                            <div class="card-body" id="3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -177,9 +157,7 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/heels/YellowHeels.jpg" alt="Yellow Heels">
-                            <div class="card-body">
-                                <p class="card-text">Yellow Heels, popular during the spring time, or to freshen up a otherwise uneventful outfit. Perfect for going out or just for photos.  
-                                </p>
+                            <div class="card-body" id="4">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -193,9 +171,7 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/Heels/BrownHeels.jpg" alt="Brown Heels">
-                            <div class="card-body">
-                                <p class="card-text">These Brown Heels go great with any earth tones, making for a wonderful fall time shoe. 
-                                </p>
+                            <div class="card-body" id="5">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -206,22 +182,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col">
-                        <div class="card shadow-sm">
-                            <img src="./images/rose.jpg" alt="rose">
-                            <div class="card-body">
-                                <p class="card-text">A rose is either a woody perennial flowering plant of the genus
-                                    Rosa, in the family Rosaceae, or the flower it bears.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
             </div>
         </div>
@@ -233,9 +193,6 @@
             <p class="float-end mb-1">
                 <a href="#">Back to top</a>
             </p>
-            <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-            <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                    href="../getting-started/introduction/">getting started guide</a>.</p>
         </div>
     </footer>
 </body>

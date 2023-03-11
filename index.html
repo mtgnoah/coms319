@@ -69,15 +69,15 @@
             -webkit-overflow-scrolling: touch;
         }
     </style>
-
+    <script src="./index.js"></script>
 
 </head>
 
-<body>
+<body onLoad="javascript:getMenDataFromJson()" >
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Assignment 1</a>
+                <a class="navbar-brand" href="#">The Shoe Haven</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -85,35 +85,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                            <a class="nav-link active" aria-current="page" href="index.html">Men's Shoes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Page2.html">Page2</a>
+                            <a class="nav-link" href="Page2.html">Women's Shoes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="link.html">Link</a>
+                            <a class="nav-link" href="link.html">Credits</a>
                         </li>
                         
                     </ul>
                 </div>
             </div>
         </nav>
-        <!--<div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
-                    <h4 class="text-black">About</h4>
-                    <p class="text-muted">This is a shoes site that sells shoes. Look at the selection below</p>
-                </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white">Contact</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                        <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>-->
     </header>
 
     <main>
@@ -128,8 +112,8 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/Black Converse(Sized).jpg" alt="Low Top Black Converse All Stars">
-                            <div class="card-body">
-                                <p class="card-text">Black Converse, a stable in anyone' shoe collection. Commonly known to be worn for skating or if you are from an alternative crowd.</p>
+                            <div class="card-body" id="1">
+                                <!--<p class="card-text">Black Converse, a stable in anyone' shoe collection. Commonly known to be worn for skating or if you are from an alternative crowd.</p>-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -143,8 +127,8 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/BlueLaceUpSneaker.jpg" alt="Lace Up Blue Sneakers">
-                            <div class="card-body">
-                                <p class="card-text">These blue lace up sneakers may be a standalone piece, or mesh within an overall outfit of blue.</p>
+                            <div class="card-body" id="2">
+                                <!--<p class="card-text">These blue lace up sneakers may be a standalone piece, or mesh within an overall outfit of blue.</p>-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -158,10 +142,10 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/Jordan1's.jpg" alt="Jordan 1's on a log">
-                            <div class="card-body">
-                                <p class="card-text">Jordan 1's, the beginning of one of the most popular shoes brands in the world, make a stable here.
+                            <div class="card-body" id="3">
+                            <!--<p class="card-text">Jordan 1's, the beginning of one of the most popular shoes brands in the world, make a stable here.
                                     Named after the legendary Michael Jordan these shoes are a great accent piece.
-                                </p>
+                                </p>-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -176,10 +160,10 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/Yeezy boost350.jpg" alt="Grey Yeezy Boost 350's">
-                            <div class="card-body">
-                                <p class="card-text">Yeezy's, made by popular shoe brand Adidas, compliment ones style while also showing off ones class.
+                            <div class="card-body" id="4">
+                                <!--<p class="card-text">Yeezy's, made by popular shoe brand Adidas, compliment ones style while also showing off ones class.
                                     These shoes range in many prices but usually end up at the higher end of sales. 
-                                </p>
+                                </p>-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -193,10 +177,10 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             <img src="./images/YellowVans.jpg" alt="Yellow Vans">
-                            <div class="card-body">
-                                <p class="card-text">Vans, a stable of the skating community, continues it's reign with these yellow shoes. Being
+                            <div class="card-body" id="5">
+                               <!-- <p class="card-text">Vans, a stable of the skating community, continues it's reign with these yellow shoes. Being
                                     flat footed, and with plenty of support for any skating needs, they make a great accent to the board.
-                                </p>
+                                </p>-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -234,8 +218,6 @@
             <p class="float-end mb-1">
                 <a href="#">Back to top</a>
             </p>
-            <p class="mb-1">Album example is &copy; Shoes, please buy!</p>
-            <p class="mb-0">New to shoes? <a href="/">Visit the homepage</a></p>
         </div>
     </footer>
 </body>
