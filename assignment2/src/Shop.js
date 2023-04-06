@@ -75,33 +75,6 @@ export function Shop() {
             <a href={`/checkout/`}>Checkout</a>
             <div className="row">
                 <div>{listItems}</div>
-                {/* Loop Products */}
-                {/* {ProductsCategory.map((product, index) => (
-                    <div key={index} className='col-sm' >
-                        <div className='card card-cascade card-ecommerce wider shadow mb-5'>
-                            <div className='view view-cascade overlay text-center'>
-                                <img
-                                    alt="Product Image"
-                                    src={product.image}
-                                />
-                                <a>
-                                    <div class='mask rgba-white-slight'></div>
-                                </a>
-                            </div>
-                            <div className='card-body card-body-cascade text-center'>
-                                <div>
-                                    <h3 className='card-title'>
-                                        <p>{product.name}</p>
-                                    </h3>
-                                    <p className='card-text'>Description: {product.desc}</p>
-                                </div>
-                                <p className='price'>${product.price}</p>
-                                <button type="button" onClick={() => removeFromCart(product)}> - </button>{" "}
-                                <button type="button" variant="light" onClick={() => addToCart(product)}> +</button>
-                            </div>
-                        </div>
-                    </div>
-                ))} */}
             </div>
         </div>
     }
