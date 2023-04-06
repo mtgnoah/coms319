@@ -6,6 +6,7 @@ export function Shop() {
 
    
     const [ProductsCategory, setProductsCategory] = useState(Products);
+    const [ProductsShown, setProductsShown] = useState(Products);
 
     const render_products = (ProductsCategory) => {
         return <div className='category-section fixed'>
@@ -38,10 +39,32 @@ export function Shop() {
             </div>
         </div>
     }
+    console.log(ProductsShown);
+    const [query, setQuery] = useState('');
+    const handleChange = (e) => {
+        setQuery(e.target.value);
+        console.log("in handleChange, Target Value : ", e.target.value," Query Value :", query);
+        
+        
+        const results = ProductsShown.filter(eachProduct => {
+            if (e.target.value === "") {
+                return ProductsShown;
+            }
+            return eachProduct.name.toLowerCase().includes(e.target.value.toLowerCase())
+    });
+    setProductsCategory(results);
+    } 
     return (
-        <div className="flex fixed flex-row">
-            <div className="ml-5 p-10 xl:basis-4/5">
-                {render_products(ProductsCategory)}
+        <div className = "flex fixed flex-row">
+            <div className = "px-6 py-4">
+                <div className = "py-10">
+                    <input type="search" value={query} onChange={handleChange}/>
+                </div>
+            </div>
+            <div className="flex fixed flex-row">
+                <div className="ml-5 p-10 xl:basis-4/5">
+                    {render_products(ProductsCategory)}
+            </div>
             </div>
         </div>
     );
