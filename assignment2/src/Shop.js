@@ -226,11 +226,11 @@ const render_form = () => {
   )
 }
 
-const render_results = (order) => {
+const render_results = () => {
   console.log("here");
   return <div className="flex fiexed flex-row">
   <div className = "px-6 py-4">
-    <button onClick={showHideCart}>Return</button>
+    <button onClick={showHideResults}>Return</button>
     <button onClick={showHideProducts}>Finish</button>
   </div>
 <div className = "category-section fixed">
@@ -379,6 +379,10 @@ const addressChange = (e) => {
   function showHideCart(){
     setShowCart(!showCart);
     setShowCatalog(!showCatalog);
+    setCard("");
+    setEmail("");
+    setFullName("");
+    setAddress({});
     if(!showCart){
       const results = ProductsShown.filter((el) => {return cart.includes(el)});
       setProductsCategory(results);
@@ -392,11 +396,10 @@ const addressChange = (e) => {
 
   function showHideResults(){
     console.log(validate());
-
     if(validate()){
       setShowCart(!showCart);
       setShowResults(!showResults);
-      render_results(order);
+      render_results();
     }
   }
   function showHideProducts() {
@@ -413,7 +416,7 @@ const addressChange = (e) => {
         <div className="ml-5 p-10 xl:basis-4/5">
           {showCatalog && render_products(ProductsCategory)}
           {showCart && render_cart(cart)}
-          {showResults && render_results(order)}
+          {showResults && render_results()}
         </div>
       </div>
   );
