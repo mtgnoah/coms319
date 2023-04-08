@@ -112,7 +112,6 @@ export function Shop() {
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">
           Products ({ProductsCategory.length})
         </h2>
-        <a href={`/checkout/`}>Checkout</a>
         <div className = "row">
             <div>{listItems}</div>
         </div>
@@ -232,7 +231,7 @@ const render_results = (order) => {
   return <div className="flex fiexed flex-row">
   <div className = "px-6 py-4">
     <button onClick={showHideCart}>Return</button>
-    <button onClick={showHideResults}>Checkout</button>
+    <button onClick={showHideProducts}>Finish</button>
   </div>
 <div className = "category-section fixed">
   <h2 className="text-3x1 font-extrabold tracking-tight text-gray-600 category-title">
@@ -400,7 +399,15 @@ const addressChange = (e) => {
       render_results(order);
     }
   }
-
+  function showHideProducts() {
+    setShowResults(!showResults);
+    setShowCatalog(!showCatalog);
+    if(!showCatalog){
+      setCart([]);
+      setProductsCategory(ProductsShown);
+      render_products(ProductsShown);
+    }
+  }
   return (
       <div className="flex fixed flex-row">
         <div className="ml-5 p-10 xl:basis-4/5">
