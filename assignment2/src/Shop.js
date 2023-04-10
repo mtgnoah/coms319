@@ -12,6 +12,8 @@ export function Shop() {
   const [cartTotal, setCartTotal] = useState(0);
   const [ProductsShown, setProductsShown] = useState(Products);
   const [showResults, setShowResults] = useState(false);
+  const [errors, setErrors] = useState("");
+
 
   const addToCart = (el) => {
     setCart([...cart, el]);
@@ -183,10 +185,10 @@ const render_form = () => {
           </div>
 
           <div className="col-12">
-            <label for="inputCard" className="form-label">Card</label>
+            <label for="card" className="form-label">Card</label>
             <div className="input-group mb-3">
               <span className="input-group-text" id="basic-addon1"><i class="bi-credit-card-fill"></i></span>
-              <input type="text" id="inputCard" className="form-control" placeholder="XXXX-XXXX-XXXX-XXXX"
+              <input type="text" id="card" className="form-control" placeholder="XXXX-XXXX-XXXX-XXXX"
                 aria-label="Username" aria-describedby="basic-addon1" onChange={cardChange}/>
               <div className="valid-feedback">
                 Looks good!
@@ -280,6 +282,7 @@ let validate = function(){
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9] {1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     )){
       console.log("bad email");
+      setErrors("Invalid Email!");
       val = false;
     }
     else {
@@ -288,6 +291,7 @@ let validate = function(){
     if (fullName.length == 0)
     {
       console.log("bad Name");
+      setErrors("Invalid Name!");
       val = false
     }
     else{
@@ -296,6 +300,7 @@ let validate = function(){
     if (!card.match(/^[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/))
     {
       console.log(card);
+      setErrors("Invalid Card!");
       console.log("bad Card");
       val = false
     }
@@ -339,7 +344,7 @@ const cardChange = (e) => {
       if(nums != 0 && nums % 4 == 0) {
           newVal += '-'
       }
-      newVal += inputCard.value[i]
+      newVal += card.value[i]
       if(isNumeric(e.target.value[i])){
           nums++;
       }
@@ -414,6 +419,7 @@ const addressChange = (e) => {
   return (
       <div className="flex fixed flex-row">
         <div className="ml-5 p-10 xl:basis-4/5">
+          <p style={{color: "Red"}}>{errors ?  errors: '' }</p>
           {showCatalog && render_products(ProductsCategory)}
           {showCart && render_cart(cart)}
           {showResults && render_results()}
