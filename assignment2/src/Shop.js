@@ -340,13 +340,14 @@ export function Shop() {
       return e.preventDefault();
     }
     else {
+      console.log(e.target.value);
       e.target.value = e.target.value.replace(/-/g, '');
       let newVal = '';
       for (var i = 0, nums = 0; i < e.target.value.length; i++) {
         if (nums != 0 && nums % 4 == 0) {
           newVal += '-'
         }
-        newVal += card.value[i]
+        newVal += e.target.value[i];
         if (isNumeric(e.target.value[i])) {
           nums++;
         }
