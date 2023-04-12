@@ -1,14 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
-=======
-import "bootstrap/dist/css/bootstrap.css";
->>>>>>> dfa82f114041ea1e6c4f9e5c7dd4aa50784c77fe
-import Shop from './Shop'
-import App from './App'
+import Shop from './Shop';
 import {
   createBrowserRouter,
   RouterProvider,

@@ -390,6 +390,7 @@ export function Shop() {
     setEmail("");
     setFullName("");
     setAddress({});
+    setErrors("");
     if (!showCart) {
       const results = ProductsShown.filter((el) => { return cart.includes(el) });
       setProductsCategory(results);

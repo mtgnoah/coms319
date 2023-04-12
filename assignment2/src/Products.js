@@ -3,7 +3,7 @@ import BlueLaceUpSneaker from "./images/BlueLaceUpSneaker.jpg";
 import jordans from "./images/jordans.jpg";
 import yeezy350 from "./images/yeezy350.jpg";
 import YellowVans from "./images/YellowVans.jpg";
-import SparkleHeels from "./images/Heels/SparkleHeels.jpg";
+import SparkleHeels from "./images/SparkleHeels.jpg";
 
 
 
