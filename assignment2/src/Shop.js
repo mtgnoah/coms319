@@ -4,6 +4,8 @@ import { Products } from "./Products";
 
 import "./shop.css";
 
+import './shop.css';
+
 export function Shop() {
   const [ProductsCategory, setProductsCategory] = useState(Products);
   const [cart, setCart] = useState([]);
@@ -231,7 +233,7 @@ export function Shop() {
   const render_results = () => {
     console.log("here");
     return (
-      <div className="flex fiexed flex-row">
+      <div className="flex fixed flex-row">
         <div className="px-6 py-4">
           <button onClick={showHideResults}>Return</button>
           <button onClick={showHideProducts}>Finish</button>
