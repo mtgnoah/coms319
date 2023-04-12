@@ -1,9 +1,5 @@
-import "./App.css";
 import React, { useState, useEffect } from "react";
 import { Products } from "./Products";
-
-import "./shop.css";
-
 import './shop.css';
 
 export function Shop() {
@@ -190,7 +186,7 @@ export function Shop() {
           <label for="card" className="form-label">Card</label>
           <div className="input-group mb-3">
             <span className="input-group-text" id="basic-addon1"><i class="bi-credit-card-fill"></i></span>
-            <input type="text" id="card" className="form-control" placeholder="XXXX-XXXX-XXXX-XXXX"
+            <input type="text" id="card" className="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19"
               aria-label="Username" aria-describedby="basic-addon1" onChange={cardChange} />
             <div className="valid-feedback">
               Looks good!
@@ -224,7 +220,7 @@ export function Shop() {
         </div>
         <div className="col-md-2">
           <label for="inputZip" className="form-label">Zip</label>
-          <input name="Zip" type="text" className="form-control" id="inputZip" onChange={addressChange} />
+          <input name="Zip" type="text" className="form-control" id="inputZip" maxLength="5" onChange={addressChange} />
         </div>
       </form>
     )
@@ -340,13 +336,14 @@ export function Shop() {
       return e.preventDefault();
     }
     else {
+      console.log(e.target.value);
       e.target.value = e.target.value.replace(/-/g, '');
       let newVal = '';
       for (var i = 0, nums = 0; i < e.target.value.length; i++) {
         if (nums != 0 && nums % 4 == 0) {
           newVal += '-'
         }
-        newVal += card.value[i]
+        newVal += e.target.value[i];
         if (isNumeric(e.target.value[i])) {
           nums++;
         }
