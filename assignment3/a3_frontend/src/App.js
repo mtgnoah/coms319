@@ -68,7 +68,7 @@ rating: {rate: 0.0, count: 0}
     console.log(id);
     if(id >= 1 && id <= 20){
       fetch("http://localhost:4000/delete/" + id, {
-        method: "POST",
+        method: "DELETE",
         headers: {"Content-type": "application/json"},
       })
       .then((response) => response.json())
@@ -267,7 +267,7 @@ rating: {rate: 0.0, count: 0}
         <input type="number" placeholder='rate?' name="rate" value={addUpdateProduct.rating.rate} onChange={handleUpdateChange} />
         <input type="number" placeholder="count?" name="count" value={addUpdateProduct.rating.count} onChange={handleUpdateChange} />
         <button type="submit" onClick={handleUpdate}>
-          submit
+          submit update
         </button>
       </form>
       <hr></hr>
