@@ -8,6 +8,10 @@ function App() {
   const [oneProduct, setOneProduct] = useState([]);
   const [viewer2, setViewer2] = useState(false);
 
+
+  const [deleteId, setDeleteId] = useState(0);
+
+
   const [addNewProduct, setAddNewProduct] = useState({
 _id: 0,
 title: "",
@@ -16,6 +20,17 @@ description: "",
 category: "",
 image: "http://127.0.0.1:4000/images/",
 rating: {rate: 0.0, count: 0}
+  });
+
+
+  const [addUpdateProduct, setUpdateProduct] = useState({
+    _id: 0,
+    title: "",
+    price: 0.0,
+    description: "",
+    category: "",
+    image: "http://127.0.0.1:4000/images/",
+    rating: { rate: 0.0, count: 0 }
   });
 
   function getAllProducts() {
@@ -49,6 +64,29 @@ rating: {rate: 0.0, count: 0}
     }
   }
 
+  function deleteOneProduct(id) {
+    console.log(id);
+    if(id >= 1 && id <= 20){
+      fetch("http://localhost:4000/delete/" + id, {
+        method: "POST",
+        headers: {"Content-type": "application/json"},
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Deleted one product: ", id);
+        console.log(data);
+        if(data){
+          const value = Object.values(data);
+          alert(value);
+        }
+      });
+    }
+    else{
+      console.log("Wrong number of Product id.");
+    }
+  }
+
+
   function handleChange(evt) {
     const value = evt.target.value;
     const name = evt.target.name;
@@ -81,6 +119,38 @@ rating: {rate: 0.0, count: 0}
     }
   }
 
+  function handleUpdateChange(evt) {
+    const value = evt.target.value;
+    const name = evt.target.name;
+    switch (name) {
+      case "_id":
+        setUpdateProduct({ ...addUpdateProduct, _id: value });
+        break;
+      case "title":
+        setUpdateProduct({ ...addUpdateProduct, title: value });
+        break;
+      case "price":
+        setUpdateProduct({ ...addUpdateProduct, price: value });
+        break;
+      case "description":
+        setUpdateProduct({ ...addUpdateProduct, description: value });
+        break
+      case "category":
+        setUpdateProduct({ ...addUpdateProduct, category: value });
+        break;
+      case "image":
+        setUpdateProduct({ ...addUpdateProduct, image: value });
+        break;
+      case "rate":
+        setUpdateProduct({ ...addUpdateProduct, rating: { rate: value } });
+        break;
+      case "count":
+        const temp = addUpdateProduct.rating.rate;
+        setUpdateProduct({ ...addUpdateProduct, rating: { rate: temp, count: value } });
+        break;
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log(e.target.value);
@@ -94,12 +164,48 @@ rating: {rate: 0.0, count: 0}
     .then((data) =>{
       console.log("Post a new Product Completed");
       console.log(data);
+      setAddNewProduct({_id: 0,
+        title: "",
+        price: 0.0,
+        description: "",
+        category: "",
+        image: "http://127.0.0.1:4000/images/",
+        rating: { rate: 0.0, count: 0 }});
       if(data){
         const value = Object.values(data);
         alert(value);
       }
     })
   }
+
+  function handleUpdate(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+
+    fetch("http://localhost:4000/update", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(addUpdateProduct),
+    })
+      .then((response => response.json()))
+      .then((data) => {
+        console.log("Post a update Product Completed");
+        console.log(data);
+        setUpdateProduct({_id: 0,
+        title: "",
+        price: 0.0,
+        description: "",
+        category: "",
+        image: "http://127.0.0.1:4000/images/",
+        rating: { rate: 0.0, count: 0 }});
+        if (data) {
+          const value = Object.values(data);
+          alert(value);
+        }
+      })
+  }
+
+
   const showAllItems = product.map((el) => (
     <div key={el._id}>
       <img src={el.image} width={30} /> <br />
@@ -150,7 +256,24 @@ rating: {rate: 0.0, count: 0}
         </button>
       </form>
       <hr></hr>
-      <h1>Delete one Product: </h1>
+      <h1> Update a Product: </h1>
+      <form action="">
+        <input type="number" placeholder="id?" name="_id" value={addUpdateProduct._id} onChange={handleUpdateChange} />
+        <input type="text" placeholder="title?" name="title" value={addUpdateProduct.title} onChange={handleUpdateChange} />
+        <input type="number" placeholder="price?" name="price" value={addUpdateProduct.price} onChange={handleUpdateChange} />
+        <input type="text" placeholder="description?" name="description" value={addUpdateProduct.description} onChange={handleUpdateChange} />
+        <input type="text" placeholder="category?" name="category" value={addUpdateProduct.category} onChange={handleUpdateChange} />
+        <input type="text" placeholder="image?" name="image" value={addUpdateProduct.image} onChange={handleUpdateChange} />
+        <input type="number" placeholder='rate?' name="rate" value={addUpdateProduct.rating.rate} onChange={handleUpdateChange} />
+        <input type="number" placeholder="count?" name="count" value={addUpdateProduct.rating.count} onChange={handleUpdateChange} />
+        <button type="submit" onClick={handleUpdate}>
+          submit
+        </button>
+      </form>
+      <hr></hr>
+      <h1>Delete Product by ID: </h1>
+      <button onClick={() => deleteOneProduct(deleteId)}>Delete Product by ID</button>
+      <input type="number" id="message" name="message" placeholder="id" onChange={((e) => setDeleteId(e.target.value))} />
       <hr></hr>
     </div>
   );

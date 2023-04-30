@@ -34,6 +34,51 @@ app.get("/:id", async(req, resp) => {
     console.log(oneProduct);
     resp.send(oneProduct);
 })
+app.post("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: id };
+    try {
+        const oneProduct = await Product.findOneAndDelete(query);
+        console.log(oneProduct);
+        const messageResponse = { message: `Product ${id} deleted correctly`};
+        res.send(JSON.stringify(messageResponse));
+    }
+    catch (err) {
+        console.log("Error while deleting a product");
+    }
+})
+
+app.post("/update", async (req, res) => {
+    const id = req.body._id;
+    const query = { _id: id };
+    const ptitle = req.body.title;
+    const pprice = req.body.price;
+    const pdescription = req.body.description;
+    const pcategory = req.body.category;
+    const pimage = req.body.image;
+    const prate = req.body.rating.rate;
+    const pcount = req.body.rating.count;
+
+    const formData = new Product({
+        _id: id,
+        title: ptitle,
+        price: pprice,
+        description: pdescription,
+        category: pcategory,
+        image: pimage,
+        rating: {rate: prate, count: pcount}
+    });
+    try {
+        const oneProduct = await Product.findOneAndUpdate(query, formData);
+        console.log(oneProduct);
+        const messageResponse = { message: `Product updated correctly` };
+        res.send(JSON.stringify(messageResponse));
+    }
+    catch (err) {
+        console.log("Error while updating a product");
+    }
+})
+
 app.post("/insert", async (req, res) => {
     console.log(req.body);
     const p_id = req.body._id;
