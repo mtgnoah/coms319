@@ -6,6 +6,8 @@ const Product = require("./dataSchema.js");
 app.use(express.json());
 app.use(cors());
 
+app.use(express.static("public"));
+app.use("/images", express.static("images"));
 mongoose.connect("mongodb://127.0.0.1:27017/reactdata",
 {
     dbName: "reactdata",
@@ -25,3 +27,39 @@ app.get("/", async(req, resp) => {
     console.log(allProducts);
     resp.send(allProducts);
 });
+app.get("/:id", async(req, resp) => {
+    const id = req.params.id;
+    const query = {_id: id};
+    const oneProduct = await Product.findOne(query);
+    console.log(oneProduct);
+    resp.send(oneProduct);
+})
+app.post("/insert", async (req, res) => {
+    console.log(req.body);
+    const p_id = req.body._id;
+    const ptitle = req.body.title;
+    const pprice = req.body.price;
+    const pdescription = req.body.description;
+    const pcategory = req.body.category;
+    const pimage = req.body.image;
+    const prate = req.body.rating.rate;
+    const pcount = req.body.rating.count;
+
+    const formData = new Product({
+        _id: p_id,
+        title: ptitle,
+        price: pprice,
+        description: pdescription,
+        category: pcategory,
+        image: pimage,
+        rating: {rate: prate, count: pcount}
+    });
+    try{
+        await Product.create(formData);
+        const messageResponse = { message: `Product ${p_id} added correctly`};
+        res.send(JSON.stringify(messageResponse));
+    }
+    catch (err){
+        console.log("Error while adding a new product");
+    }
+})
