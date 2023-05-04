@@ -21,24 +21,26 @@ app.listen(port, () => {
     console.log(`App listening at http://%s%s`, host, port);
 });
 //Inital
-app.get("/allProducts", async(req, resp) => {
+app.get("/", async(req, resp) => {
     query = {};
     allProducts = await Shoe.find(query);
     resp.send(allProducts);
 })
-//Search
-app.get("/:name", async(req, resp) => {
-    const name = req.params.name;
-    const query = {name: name};
-        const Products = await Shoe.find(query);
-        console.log(Products);
-        resp.send(Products);
-});
-//More info
-app.get("/more/:id", async(req, resp) => {
+//findone
+
+app.get("/:id", async(req, resp) => {
     const id = req.params.id;
     const query = {_id: id};
-    const one = await Shoe.findOne(query);
-    console.log(one);
-    resp.send(one);
+    const oneProduct = await Shoe.findOne(query);
+    console.log(oneProduct);
+    resp.send(oneProduct);
+})
+
+app.get("/type/:category", async(req, resp) => {
+    const type = req.params.category;
+    console.log(type);
+    const query = {category: type};
+    const Products = await Shoe.find(query);
+    console.log(Products);
+    resp.send(Products);
 })
