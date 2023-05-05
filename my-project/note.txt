@@ -1,0 +1,104 @@
+import { createContext, useContext, useState } from "react"
+import CheckoutPopout from './CheckoutPopout';
+import { useLocalStorage } from "./useLocalStorage"
+
+const ShoppingCartContext = createContext({})
+
+export function useShoppingCart() {
+    return useContext(ShoppingCartContext)
+}
+export function ShoppingCartProvider({ children }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+    const [cartQuantity, setCartQuantity] = useState(0);
+    const [cartId, setCartId] = useState("0");
+
+    useEffect(() => {
+        async function fetchCartItems() {
+            try {
+                const response = await fetch("http://localhost:4000/api/cart", {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                })
+                const data = await response.json();
+                setCartId(data.result);
+                
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchCartItems();
+    }, []);
+
+    const openCart = () => setIsOpen(true);
+    const closeCart = () => setIsOpen(false);
+
+    async function getItemQuantity(id) {
+        try {
+            const response = await fetch(`/api/cart/${id}/quantity`);
+            const data = await response.json();
+            return data.quantity;
+        } catch (error) {
+            console.error(error);
+            return 0;
+        }
+    }
+
+    async function increaseCartQuantity(id) {
+        try {
+            const response = await fetch(`/api/cart/${id}/increase`, {
+                method: "POST",
+            });
+            const data = await response.json();
+            setCartItems(data.items);
+            setCartQuantity(data.quantity);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function decreaseCartQuantity(id) {
+        try {
+            const response = await fetch(`/api/cart/${id}/decrease`, {
+                method: "POST",
+            });
+            const data = await response.json();
+            setCartItems(data.items);
+            setCartQuantity(data.quantity);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function removeFromCart(id) {
+        try {
+            const response = await fetch(`/api/cart/${id}/remove`, {
+                method: "POST",
+            });
+            const data = await response.json();
+            setCartItems(data.items);
+            setCartQuantity(data.quantity);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    return (
+        <ShoppingCartContext.Provider
+            value={{
+                getItemQuantity,
+                increaseCartQuantity,
+                decreaseCartQuantity,
+                removeFromCart,
+                openCart,
+                closeCart,
+                cartItems,
+                cartQuantity
+            }}
+        >
+            {children}
+            <CheckoutPopout isOpen={isOpen} />
+        </ShoppingCartContext.Provider>
+    )
+}
