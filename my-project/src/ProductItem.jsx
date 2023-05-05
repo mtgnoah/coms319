@@ -3,37 +3,35 @@ import React from 'react'
 import { useShoppingCart } from "./ShoppingCartContext"
 
 
-function ProductItem(product) {
+function ProductItem({ image, id, price, desc, name }) {
     const {
         getItemQuantity,
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
     } = useShoppingCart()
-    const quantity = getItemQuantity(product.id)
+    const quantity = getItemQuantity(id);
+    console.log(quantity);
 
 
     return (
-        <div key={product.id} className="group relative">
+        <div className="group relative">
             <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                 <img
-                    src={product.image}
+                    src={image}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                 />
             </div>
             <div className="mt-4 flex justify-between">
                 <div>
                     <h3 className="text-sm text-gray-700">
-                        <a href={product.desc}>
-                            <span aria-hidden="true" className="absolute inset-0" />
-                            {product.name}
-                        </a>
+                        {name}
                     </h3>
+                    <p className="text-sm font-medium text-gray-900">{price}</p>
                 </div>
-                <p className="text-sm font-medium text-gray-900">{product.price}</p>
-                <div className="mt-auto">
+                <div className="mt-1">
                     {quantity === 0 ? (
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => increaseCartQuantity(product.id)}>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => increaseCartQuantity(id)}>
                             + Add To Cart
                         </button>
                     ) : (
@@ -43,14 +41,14 @@ function ProductItem(product) {
                             <div
                                 className="d-flex align-items-center justify-content-center"
                             >
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => decreaseCartQuantity(product.id)}>-</button>
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => decreaseCartQuantity(id)}>-</button>
                                 <div>
                                         <span className="fs-3">{quantity}</span> in cart
                                 </div>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => increaseCartQuantity(product.id)}>+</button>
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => increaseCartQuantity(id)}>+</button>
                             </div>
                             <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                onClick={() => removeFromCart(product.id)}
+                                onClick={() => removeFromCart(id)}
                             >
                                 Remove
                             </button>

@@ -9,7 +9,6 @@ import SparkleHeels from "./images/SparkleHeels.jpg";
 
 
 
-
 export const Products = [
     {
         "image": blackconverse,
