@@ -24,7 +24,7 @@ app.listen(port, () => {
 app.get("/", async(req, resp) => {
     query = {};
     allProducts = await Product.find(query);
-    console.log(allProducts);
+    //console.log(allProducts);
     resp.send(allProducts);
 });
 app.get("/:id", async(req, resp) => {
