@@ -21,86 +21,22 @@ app.listen(port, () => {
     console.log(`App listening at http://%s:%s`, host, port);
 });
 
-app.post("/api/cart", async (req, resp) => {
-    query = {};
-    const formData = new Cart({
-        status: "active",
-    });
+app.post("/cart", async (req, res) => {
     try {
-        const result = await Cart.create(formData);
-        const messageResponse = { "result": result._id };
-        resp.send(JSON.stringify(messageResponse));
+        const newCart = await Cart.create({
+            status: "active",
+            items: [],
+            bill: 0,
+        });
+        const msg = { "_id": newCart._id };
+        return res.status(201).send(msg);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Cart creation went wrong");    
     }
-    catch (err) {
-        console.log("Error while adding a new Cart");
-    }
-    //console.log(allProducts);
 });
-app.get("/:id", async (req, resp) => {
-    const id = req.params.id;
-    const query = { _id: id };
-    const oneProduct = await Cart.findOne(query);
-    console.log(oneProduct);
-    resp.send(oneProduct);
-})
-app.post("/delete/:id", async (req, res) => {
-    const id = req.params.id;
-    const query = { _id: id };
-    try {
-        const oneProduct = await Cart.findOneAndDelete(query);
-        console.log(oneProduct);
-        const messageResponse = { message: `Cart ${id} deleted correctly` };
-        res.send(JSON.stringify(messageResponse));
-    }
-    catch (err) {
-        console.log("Error while deleting a Cart");
-    }
-})
 
-app.post("/updateQuantity", async (req, res) => {
-    const id = req.body._id;
-    const query = { _id: id };
-    const pquantity = req.body.quantity;
-
-    const formData = new Cart({
-        _id: id,
-        quantity: pquantity
-    });
-    try {
-        const oneProduct = await Cart.findOneAndUpdate(query, formData);
-        console.log(oneProduct);
-        const messageResponse = { message: `Cart updated correctly` };
-        res.send(JSON.stringify(messageResponse));
-    }
-    catch (err) {
-        console.log("Error while updating a Cart");
-    }
-})
-
-
-
-
-app.post("/insert", async (req, res) => {
-    console.log(req.body);
-    const p_id = req.body._id;
-    const pquantity = req.body.title;
-
-    const formData = new Order({
-        _id: p_id,
-        quantity: pquantity,
-    });
-    try {
-        await Order.create(formData);
-        const messageResponse = { message: `Order ${p_id} added correctly` };
-        res.send(JSON.stringify(messageResponse));
-    }
-    catch (err) {
-        console.log("Error while adding a new Order");
-    }
-})
-
-
-router.get("/cart/:id", async (req, res) => {
+app.get("/cart/:id", async (req, res) => {
     const cartId = req.params.id;
 
 
@@ -117,7 +53,7 @@ router.get("/cart/:id", async (req, res) => {
 });
 
 //add cart
-router.post("/cart/increaseQuantity", async (req, res) => {
+app.post("/cart/increaseQuantity", async (req, res) => {
     const { itemId, price, name, quantity, cartId } = req.body;
 
     try {
@@ -171,7 +107,7 @@ router.post("/cart/increaseQuantity", async (req, res) => {
 
 //delete item in cart
 
-router.delete("/cart/decreaseQuantity", async (req, res) => {
+app.delete("/cart/decreaseQuantity", async (req, res) => {
     const cartId =  req.query.cartId;
     const itemId = req.query.itemId;
     try {
