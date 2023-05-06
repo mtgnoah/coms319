@@ -52,9 +52,26 @@ app.get("/cart/:id", async (req, res) => {
     }
 });
 
+app.get("/cart/:id/quantity/:itemid", async (req, res) => {
+    const cartId = req.params.id;
+    const itemId = req.params.itemid;
+
+    try {
+        const cart = await Cart.findOne({ _id: cartId });
+        const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
+        let product = cart.items[itemIndex];
+        const msg = { "quantity": product.quantity };
+        res.status(200).send(msg);
+    } catch (error) {
+        res.status(500).send();
+    }
+});
+
 //add cart
 app.post("/cart/increaseQuantity", async (req, res) => {
-    const { itemId, price, name, quantity, cartId } = req.body;
+    const { itemId, price, name, cartId } = req.body;
+
+    const quantity = 1;
 
     try {
         const cart = await Cart.findOne({ _id: cartId });
@@ -72,7 +89,7 @@ app.post("/cart/increaseQuantity", async (req, res) => {
 
             if (itemIndex > -1) {
                 let product = cart.items[itemIndex];
-                product.quantity += quantity;
+                product.quantity += 1;
 
                 cart.bill = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
@@ -82,6 +99,7 @@ app.post("/cart/increaseQuantity", async (req, res) => {
                 await cart.save();
                 res.status(200).send(cart);
             } else {
+               
                 cart.items.push({ itemId, name, quantity, price });
                 cart.bill = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
@@ -105,9 +123,39 @@ app.post("/cart/increaseQuantity", async (req, res) => {
     }
 });
 
-//delete item in cart
 
 app.delete("/cart/decreaseQuantity", async (req, res) => {
+    const cartId = req.query.cartId;
+    const itemId = req.query.itemId;
+    try {
+        let cart = await Cart.findOne({ _id: cartId });
+
+        const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
+
+        if (itemIndex > -1) {
+            let product = cart.items[itemIndex];
+            product.quantity -= 1;
+            cart.bill -= item.price;
+            
+            cart.bill = cart.items.reduce((acc, curr) => {
+                return acc + curr.quantity * curr.price;
+            }, 0)
+
+            cart.items[itemIndex] = product;
+            await cart.save();
+            res.status(200).send(cart);
+        } else {
+            res.status(404).send("item not found");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).send();
+    }
+});
+
+//delete item in cart
+
+app.delete("/cart/delete", async (req, res) => {
     const cartId =  req.query.cartId;
     const itemId = req.query.itemId;
     try {
