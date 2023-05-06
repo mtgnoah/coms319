@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useShoppingCart } from "./ShoppingCartContext"
@@ -9,7 +9,7 @@ import { Products } from "./Products";
 
 
 function CheckoutPopout({ isOpen }) {
-    const { closeCart, cartItems } = useShoppingCart()
+    const { closeCart, checkout, cartItems} = useShoppingCart()
 
     const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
         currency: "USD",
@@ -92,12 +92,13 @@ function CheckoutPopout({ isOpen }) {
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                             <div className="mt-6">
-                                                <a
-                                                    href="#"
+                                                <button
+                                                    type="button"
                                                     className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                                                    onClick={() => checkout()}
                                                 >
                                                     Checkout
-                                                </a>
+                                                </button>
                                             </div>
                                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>

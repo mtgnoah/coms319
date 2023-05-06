@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const uuid = require('node-uuid');
+
 
 // const CartItemDataSchema = new mongoose.Schema({
 //     id: { type: Number },
@@ -11,24 +13,18 @@ const mongoose = require('mongoose');
 // const CartItem = mongoose.model('CartItem', CartItemDataSchema)
 
 const cartSchema = new mongoose.Schema({
+    _id: { type: String, default: uuid.v1 },
     status: { type: String },
     items: [{
         itemId: {
             type: Number,
         },
-        name: String,
         quantity: {
             type: Number,
-            min: 1,
+            min: 0,
             default: 1
         },
-        price: Number
-    }],
-    bill: {
-        type: Number,
-        required: true,
-        default: 0
-    }
+    }]
 }, {
     collection: "cartCatalog"
 })

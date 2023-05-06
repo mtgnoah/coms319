@@ -1,4 +1,5 @@
-import React from 'react'
+import { React, useState, useEffect } from "react"
+
 
 import { useShoppingCart } from "./ShoppingCartContext"
 
@@ -10,8 +11,17 @@ function ProductItem({ image, id, price, desc, name }) {
         decreaseCartQuantity,
         removeFromCart,
     } = useShoppingCart()
-    const quantity = getItemQuantity(id);
-    console.log(quantity);
+
+    const [quantity, setQuantity] = useState(0);
+
+
+    useEffect(() => {
+        const getQuantity = async () => {
+            const q = await getItemQuantity(id);
+            setQuantity(q);
+        };
+        getQuantity();
+    }, [getItemQuantity, id]);
 
 
     return (

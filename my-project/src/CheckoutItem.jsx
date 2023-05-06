@@ -3,9 +3,9 @@ import { Products } from "./Products";
 import { useShoppingCart } from "./ShoppingCartContext";
 
 
-function CheckoutItem({ id, quantity }) {
+function CheckoutItem({ itemId, quantity }) {
     const { removeFromCart } = useShoppingCart()
-    const item = Products.find(i => i.id === id)
+    const item = Products.find(i => i.id === itemId)
     if (item == null) return null
 
     const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
@@ -42,7 +42,7 @@ function CheckoutItem({ id, quantity }) {
                         <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => removeFromCart(item.id)}
+                            onClick={() => removeFromCart(itemId)}
                         >
                             Remove
                         </button>

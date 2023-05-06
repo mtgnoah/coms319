@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import CheckoutPopout from './CheckoutPopout';
 import { useLocalStorage } from "./useLocalStorage"
 
@@ -11,6 +11,26 @@ export function ShoppingCartProvider({ children }) {
     const [isOpen, setIsOpen] = useState(false)
     const [cartItems, setCartItems] = useLocalStorage("shopping-cart", [])
 
+    const [cartId, setCartId] = useState("");
+
+    useEffect(() => {
+        async function fetchCartItems() {
+            try {
+                const response = await fetch("http://localhost:4000/cart", {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                })
+                const data = await response.json();
+                console.log("FIRST");
+                setCartId(data._id);
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchCartItems();
+    }, []);
+
     const cartQuantity = cartItems.reduce(
         (quantity, item) => item.quantity + quantity,
         0
@@ -18,47 +38,93 @@ export function ShoppingCartProvider({ children }) {
 
     const openCart = () => setIsOpen(true)
     const closeCart = () => setIsOpen(false)
-    function getItemQuantity(id) {
-        return cartItems.find(item => item.id === id)?.quantity || 0
+
+    async function getItemQuantity(itemId) {
+        try {
+            const response = await fetch("http://localhost:4000/cart/" + cartId + "/quantity/" + itemId);
+            const data = await response.json();
+           // console.log(data);
+            return data.quantity;
+        } catch (error) {
+            console.error(error);
+            return 0;
+        }
     }
 
-    function increaseCartQuantity(id) {
-        setCartItems((currItems) => {
-            if (currItems.find((item) => item.id === id) == null) {
-                return [...currItems, { id, quantity: 1 }];
-            } else {
-                return currItems.map((item) => {
-                    if (item.id === id) {
-                        return { ...item, quantity: item.quantity + 1 };
-                    } else {
-                        return item;
-                    }
-                });
-            }
-        });
+    async function increaseCartQuantity(id) {
+        try {
+            const msg = { "cartId": cartId, "itemId": id }
+            const response = await fetch("http://localhost:4000/cart/increaseQuantity", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(msg),
+            });
+            const data = await response.json();
+            setCartItems(data.items);
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    function decreaseCartQuantity(id) {
-        setCartItems((currItems) => {
-            if (currItems.find((item) => item.id === id)?.quantity === 1) {
-                return currItems.filter((item) => item.id !== id);
-            } else {
-                return currItems.map((item) => {
-                    if (item.id === id) {
-                        return { ...item, quantity: item.quantity - 1 };
-                    } else {
-                        return item;
-                    }
-                });
-            }
-        });
+    async function decreaseCartQuantity(id) {
+        //TODO so here I will want to call /cart/decreaseQuantity and then setCartItems with that result
+        try {
+            const msg = { "cartId": cartId, "itemId": id }
+            const response = await fetch("http://localhost:4000/cart/decreaseQuantity", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(msg),
+            });
+            const data = await response.json();
+            setCartItems(data.items);
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    function removeFromCart(id) {
-        setCartItems((currItems) => {
-            return currItems.filter((item) => item.id !== id);
-        });
+    async function removeFromCart(id) {
+        try {
+            const response = await fetch(`http://localhost:4000/cart/${cartId}/delete/${id}`, {
+                method: "DELETE",
+                headers: { "Content-type": "application/json" },
+            });
+            const data = await response.json();
+            setCartItems(data.items);
+        } catch (error) {
+            console.error(error);
+        }
     }
+
+    async function checkout() {
+        try {
+            setIsOpen(false)
+            const msg = {"cartId": cartId}
+            const response = await fetch("http://localhost:4000/checkout", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(msg),
+            });
+            console.log(response);
+
+            setCartItems([]);
+            alert("Checkout Successful!");
+
+            window.location.reload(false);
+
+            // const res = await fetch("http://localhost:4000/cart", {
+            //         method: "POST",
+            //         headers: { "Content-type": "application/json" },
+            //     })
+            // const data = await res.json();
+            // setCartId(data._id);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
 
     return (
@@ -70,6 +136,7 @@ export function ShoppingCartProvider({ children }) {
                 removeFromCart,
                 openCart,
                 closeCart,
+                checkout,
                 cartItems,
                 cartQuantity
             }}

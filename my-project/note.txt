@@ -11,7 +11,7 @@ export function ShoppingCartProvider({ children }) {
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [cartQuantity, setCartQuantity] = useState(0);
-    const [cartId, setCartId] = useState("0");
+    const [cartId, setCartId] = useState("");
 
     useEffect(() => {
         async function fetchCartItems() {
