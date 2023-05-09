@@ -84,8 +84,8 @@ function CheckoutPopout({ isOpen }) {
                                                     Total{" "}
                                                     {formatCurrency(
                                                         cartItems.reduce((total, cartItem) => {
-                                                            const item = Products.find(i => i.id === cartItem.id)
-                                                            return total + (item?.price || 0) * cartItem.quantity
+                                                            const item = Products.find(i => i.id === cartItem.itemId)
+                                                            return total + (item?.price === undefined ? 0 : item.price) * cartItem.quantity
                                                         }, 0)
                                                     )}
                                                 </p>
