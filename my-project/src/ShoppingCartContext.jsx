@@ -16,7 +16,7 @@ export function ShoppingCartProvider({ children }) {
     useEffect(() => {
         async function fetchCartItems() {
             try {
-                const response = await fetch("http://localhost:4000/cart", {
+                const response = await fetch("http://10.90.72.112:4000/cart", {
                     method: "POST",
                     headers: { "Content-type": "application/json" },
                 })
@@ -41,7 +41,7 @@ export function ShoppingCartProvider({ children }) {
 
     async function getItemQuantity(itemId) {
         try {
-            const response = await fetch("http://localhost:4000/cart/" + cartId + "/quantity/" + itemId);
+            const response = await fetch("http://10.90.72.112:4000/cart/" + cartId + "/quantity/" + itemId);
             const data = await response.json();
            // console.log(data);
             return data.quantity;
@@ -54,7 +54,7 @@ export function ShoppingCartProvider({ children }) {
     async function increaseCartQuantity(id) {
         try {
             const msg = { "cartId": cartId, "itemId": id }
-            const response = await fetch("http://localhost:4000/cart/increaseQuantity", {
+            const response = await fetch("http://10.90.72.112:4000/cart/increaseQuantity", {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(msg),
@@ -71,7 +71,7 @@ export function ShoppingCartProvider({ children }) {
         //TODO so here I will want to call /cart/decreaseQuantity and then setCartItems with that result
         try {
             const msg = { "cartId": cartId, "itemId": id }
-            const response = await fetch("http://localhost:4000/cart/decreaseQuantity", {
+            const response = await fetch("http://10.90.72.112:4000/cart/decreaseQuantity", {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(msg),
@@ -86,7 +86,7 @@ export function ShoppingCartProvider({ children }) {
 
     async function removeFromCart(id) {
         try {
-            const response = await fetch(`http://localhost:4000/cart/${cartId}/delete/${id}`, {
+            const response = await fetch(`http://10.90.72.112:4000/cart/${cartId}/delete/${id}`, {
                 method: "DELETE",
                 headers: { "Content-type": "application/json" },
             });
@@ -101,7 +101,7 @@ export function ShoppingCartProvider({ children }) {
         try {
             setIsOpen(false)
             const msg = {"cartId": cartId}
-            const response = await fetch("http://localhost:4000/checkout", {
+            const response = await fetch("http://10.90.72.112:4000/checkout", {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(msg),
@@ -113,7 +113,7 @@ export function ShoppingCartProvider({ children }) {
 
             window.location.reload(false);
 
-            // const res = await fetch("http://localhost:4000/cart", {
+            // const res = await fetch("http://10.90.72.112:4000/cart", {
             //         method: "POST",
             //         headers: { "Content-type": "application/json" },
             //     })

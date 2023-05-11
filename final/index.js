@@ -8,7 +8,7 @@ app.use(cors());
 
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
-mongoose.connect("mongodb://127.0.0.1:27017/finaldata",
+mongoose.connect("mongodb://10.90.72.112:27017/finaldata",
     {
         dbName: "finaldata",
         useNewUrlParser: true,
@@ -16,7 +16,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/finaldata",
     });
 
 const port = process.env.PORT || "4000";
-const host = "localhost";
+const host = "10.90.72.112";
 app.listen(port, () => {
     console.log(`App listening at http://%s:%s`, host, port);
 });
